@@ -37,7 +37,6 @@ streamlit.dataframe(fruityvice_normalized)
 fruit_choice = streamlit.text_input('What fruit would you like information about?','Kiwi')
 streamlit.write('The user entered ', fruit_choice)
 
-
-
-
+#tells app to brin ikn code from snowflake library
+import snowflake.connector
 
