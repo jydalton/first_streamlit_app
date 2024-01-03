@@ -1,4 +1,8 @@
 import streamlit
+import pandas 
+import requests
+import snowflake.connector
+import urllib.error import URLError #error message handling
 
 streamlit.title('My Moms New Healthy Diner')
 
@@ -10,7 +14,7 @@ streamlit.text('🥑🍞 Avocado Toast')
 ('\n')
 streamlit.header('🍌🍓 Build Your Own Fruit Smoothie 🥝🍇')
 
-import pandas 
+#import pandas 
 my_fruit_list = pandas.read_csv("https://uni-lab-files.s3.us-west-2.amazonaws.com/dabw/fruit_macros.txt")
 my_fruit_list = my_fruit_list.set_index('Fruit')
 
@@ -25,7 +29,7 @@ streamlit.dataframe(fruits_to_show)
 # Calling Fruitycive API from Streamlit App
 streamlit.header("Fruityvice Fruit Advice!")
 
-import requests
+#import requests
 fruityvice_response = requests.get("https://fruityvice.com/api/fruit/" + "watermelon")
 
 # normalizes jso version of response
@@ -37,8 +41,7 @@ streamlit.dataframe(fruityvice_normalized)
 fruit_choice = streamlit.text_input('What fruit would you like information about?','Kiwi')
 streamlit.write('The user entered ', fruit_choice)
 
-#tells app to brin ikn code from snowflake library
-import snowflake.connector
+streamlit.stop()
 
 my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
 my_cur = my_cnx.cursor()
@@ -52,6 +55,8 @@ second_fruit_choice = streamlit.text_input('What fruit would you like to add?','
 streamlit.write('Thanks for choosing', second_fruit_choice)
 
 my_cur.execute("insert into fruit_load_list values ('from streamlit')")
+#only want new rows when we want new rows, not just when page is interacted with! 
+
 
 
 
