@@ -41,9 +41,9 @@ try:
 except URLError as e:
   streamlit.error()
 
-streamlit.text("The fruit load list contains")
-def fet_fruit_load_list(): #s-owflake related functions
-    with my_cur = my_cnx.cursor() as my_cur:
+streamlit.header("The fruit load list contains:")
+def get_fruit_load_list(): #s-owflake related functions
+    with my_cnx.cursor() as my_cur:
         my_cur.execute("select * from fruit_load_list")
         return my_cur.fetchall()
 if streamlit.button('Get Fruit Load List'):
