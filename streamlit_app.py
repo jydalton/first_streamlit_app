@@ -29,7 +29,7 @@ def get_fruityvice_data(this_fruit_choice): #create repeatable code block/functi
     fruityvice_response = requests.get("https://fruityvice.com/api/fruit/" + this_fruit_choice)
     fruityvice_normalized = pandas.json_normalize(fruityvice_response.json())
     return fruityvice_normalized
-  
+
 streamlit.header("Fruityvice Fruit Advice!") #section to display fruityvice api response
 try: 
   fruit_choice = streamlit.text_input('What fruit would you like information about?')
@@ -41,17 +41,19 @@ try:
 except URLError as e:
   streamlit.error()
 
-streamlit.header("The fruit load list contains:")
+## get fruit list button
+streamlit.header("View Out Fruit List - Add Your Favorites !!")
 def get_fruit_load_list(): #snowflake-related functions
     with my_cnx.cursor() as my_cur:
         my_cur.execute("select * from fruit_load_list")
         return my_cur.fetchall()
-if streamlit.button('Get Fruit Load List'):
+if streamlit.button('Get Fruit List'):
     my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
     my_data_rows = get_fruit_load_list()
+    my_cnx.close()
     streamlit.dataframe(my_data_rows)
     
-
+## add more fruits button and user inputs
 def insert_row_snowflake(new_fruit):
     with my_cnx.cursor() as my_cur:
         my_cur.execute("insert into fruit_load_list values ('" + new_fruit + "')")
